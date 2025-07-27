@@ -37,4 +37,4 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/docker_repo_key
           chmod 600 ~/.ssh/docker_repo_key
           echo -e "Host ec2\n\tHostName $SSH_HOST\n\tUser $SSH_USER\n\tIdentityFile ~/.ssh deploy_key\n\tStrictHostKeyChecking no" > ~/.ssh/config
-          docker stop repo-ws  && docker run --name repo-ws -d -p 8080:8080 itzraghavv/repo-be :${{ github.sha }}
+          docker stop repo-ws && docker run --name repo-ws -d -p 8080:8080 itzraghavv/repo-ws:${{ github.sha }}
