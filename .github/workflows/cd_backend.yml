@@ -37,3 +37,4 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/docker_repo_key
           chmod 600 ~/.ssh/docker_repo_key
           echo -e "Host ec2\n\tHostName $SSH_HOST\n\tUser $SSH_USER\n\tIdentityFile ~/.ssh deploy_key\n\tStrictHostKeyChecking no" > ~/.ssh/config
+          docker stop user_backend && docker run --name user_backend -d -p 8080:8080 100xdevs/user-app-backend:${{ github.sha }}
