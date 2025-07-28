@@ -41,6 +41,6 @@ jobs:
           echo SSH connection success
           docker rm -f repo-fe 2>/dev/null || true
           docker pull itzraghavv/repo-fe:${{ github.sha }}
-          docker run --name repo-fe -d -p 3000:3000 itzraghavv/repo-fe:${{ github.sha }}
+          docker run --name repo-fe -d -p 3000:3000 -e DATABASE_URL=postgresql://neondb_owner:npg_bM7anQhqWVJ1@ep-spring-poetry-adche70j-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require itzraghavv/repo-fe:${{ github.sha }}
           docker ps 
           EOF
