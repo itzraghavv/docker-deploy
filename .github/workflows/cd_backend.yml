@@ -35,7 +35,7 @@ jobs:
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/docker_repo_key
           chmod 600 ~/.ssh/docker_repo_key
-          echo -e "Host ec2\n\tHostName $SSH_HOST\n\tUser $SSH_USER\n\tIdentityFile ~/.ssh/deploy_key\n\tStrictHostKeyChecking no" > ~/.ssh/config
+          echo -e "Host ec2\n\tHostName $SSH_HOST\n\tUser $SSH_USER\n\tIdentityFile ~/.ssh/docker_repo_key\n\tStrictHostKeyChecking no" > ~/.ssh/config
           ssh ec2 << EOF 
           echo SSH connection successful
           docker rm -f repo-ws 2>/dev/null || true
