@@ -18,7 +18,7 @@ jobs:
           username: ${{secrets.DOCKER_ID}}
           password: ${{secrets.DOCKER_TOKEN}}
 
-      - name: Build the image
+      - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
@@ -26,14 +26,17 @@ jobs:
           push: true
           tags: itzraghavv/repo-be:${{github.sha}}
 
+      - name: Deploy to VM
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_HOST: ${{secrets.SSH_HOST}}
           SSH_USER: ${{secrets.SSH_USER}}
-      - run: |
+        run: |
           mkdir -p ~/.ssh/
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/docker_repo_key
           chmod 600 ~/.ssh/docker_repo_key
           echo -e "Host ec2\n\tHostName $SSH_HOST\n\tUser $SSH_USER\n\tIdentityFile ~/.ssh deploy_key\n\tStrictHostKeyChecking no" > ~/.ssh/config
-          docker rm -f repo-be 2>/dev/null || true
-          docker run --name repo-be -d -p 8081:8081 itzraghavv/repo-be:${{ github.sha }}
+          ssh ec2 << EOF docker rm -f repo-ws 2>/dev/null || true
+          docker pull itzraghavv/repo-ws:${{ github.sha }}
+          docker run --name repo-ws -d -p 8080:8080 itzraghavv/repo-ws:${{ github.sha }}
+          EOF
