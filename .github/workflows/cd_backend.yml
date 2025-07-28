@@ -40,6 +40,6 @@ jobs:
           echo SSH connection successful
           docker rm -f repo-be 2>/dev/null || true
           docker pull itzraghavv/repo-be:${{ github.sha }}
-          docker run --name repo-be -d -p 8080:8080 itzraghavv/repo-be:${{ github.sha }}
+          docker run --name repo-be -d -p 8081:8081 itzraghavv/repo-be:${{ github.sha }}
           docker ps
           EOF
