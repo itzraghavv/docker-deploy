@@ -6,7 +6,7 @@ app.use(express.json());
 
 app.get("/", (req, res) => {
   res.json({
-    message: "This repo is deployed to VM using Docker",
+    message: "This repo is deployed to VM using Docker.",
   });
 });
 
