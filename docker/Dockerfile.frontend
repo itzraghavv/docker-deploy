@@ -3,7 +3,7 @@ FROM oven/bun:latest
 WORKDIR /usr/src/app
 
 ARG DATABASE_URL
-ENV DATABASE_URL=${DATABASE_URL}
+ENV DATABASE_URL=$DATABASE_URL
 COPY ./packages ./packages
 
 COPY ./package.json ./package.json
